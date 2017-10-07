@@ -1,0 +1,20 @@
+{
+  "name": "etherscaner",
+  "version": "0.0.1",
+  "description": "Receive all the ethereum transactions that have been included in the block, including 'internal' transactions",
+  "author": "SBit",
+  "license": "MIT",
+	"scripts": {
+		"test": "mocha"
+	},
+	"engines": {
+    "node": ">= 6.0.0"
+  },
+  "main": "./index.js",
+  "dependencies": {
+    "async": "^2.5.0",
+    "log4js": "^2.3.4",
+    "mocha": "^4.0.1",
+    "web3": "^0.20.2"
+  }
+}
