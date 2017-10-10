@@ -5,7 +5,7 @@ function step(log, db) {
 		return;
 	
 	// If an error occurred (eg, out of gas), discard the current stack frame
-	if(log.error) {
+	if(log.op.toString() == 'REVERT') {
 		this.data = this.data.slice(0, -1);
 		return;
 	}
@@ -19,8 +19,9 @@ function step(log, db) {
 			// console.log(topFrame.accountAddress);
 			// Now we know our new address, fill it in everywhere.
 			var createdAddress = log.stack.peek(0).String();
-			if(!topFrame.accountAddress)
-				topFrame.accountAddress = createdAddress;
+			if(!topFrame.accountAddress) {
+				topFrame.accountAddress = log.stack.peek(0).Bytes();
+			}
 
 			returnFrame.transfers.forEach(function(tx, i) {
 				if(!tx.to) returnFrame.transfers[i].to = createdAddress;
@@ -80,7 +81,7 @@ function step(log, db) {
 			this.data.push({
 				value: value,
 				op: log.op,
-				accountAddress: to,
+				accountAddress: log.stack.peek(1).Bytes(),
 				transfers: transfers
 			});
 			break;

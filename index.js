@@ -24,6 +24,7 @@ class EtherScanner {
 	scanBlock(number, cb) {
 		this.web3.eth.getBlock(number, (err, block) => {
 			if(err) return cb(err);
+			if(!block) return cb(number, []);
 			let result = [];
 			async.eachSeries(block.transactions, (txHash, cb) => {
 				this.scanTransaction(txHash, (err, transactions) => {
@@ -96,8 +97,8 @@ class EtherScanner {
 				stackRow.transfers.forEach(internalTx => transactions.push({
 					blockNumber: tx.blockNumber,
 					blockHash: tx.blockHash,
-					to: internalTx.to && !internalTx.to.match(/^0x[a-zA-Z0-9]{40}/) ? this.web3.toHex(internalTx.to) : internalTx.to,
-					from: internalTx.from && !internalTx.from.match(/^0x[a-zA-Z0-9]{40}/) ? this.web3.toHex(internalTx.from) : internalTx.from,
+					to: this._getAddress(internalTx.to),
+					from: this._getAddress(internalTx.from),
 					value: internalTx.value,
 					hash: tx.hash,
 					kind: internalTx.kind,
@@ -137,7 +138,7 @@ class EtherScanner {
 	_getTransactionsFromTrace(txHash, cb) {
 		return this.web3.currentProvider.sendAsync({
 			method: "debug_traceTransaction",
-			params: [txHash, {tracer: `{data: [], step: ${fs.readFileSync('./traceStepFunction.js').toString()}, result: function() { return this.data; }}`}],
+			params: [txHash, {tracer: `{data: [], step: ${fs.readFileSync(__dirname + '/traceStepFunction.js').toString()}, result: function() { return this.data; }}`}],
 			jsonrpc: "2.0",
 			id: "2"
 		}, (err, result) => {
@@ -145,6 +146,18 @@ class EtherScanner {
 				return cb(result.message);
 			return cb(null, result.result);
 		});
+	}
+	
+	_getAddress(value) {
+		if(!value)
+			return value;
+		if(value.match(/^0x[a-zA-Z0-9]{40}/))
+			return value;
+		
+		let address = this.web3.toHex(value);
+		while(address.length < 42)
+			address = address.replace(/^0x/, '0x0');
+		return address;
 	}
 }
 
