@@ -4,8 +4,8 @@
  
 [![NPM version][npm-image]][npm-url]
 
-[npm-image]: https://badge.fury.io/js/etherscanner.svg
-[npm-url]: https://npmjs.org/package/etherscanner
+[npm-image]: https://badge.fury.io/js/etherscaner.svg
+[npm-url]: https://npmjs.org/package/etherscaner
 
 ## Installation
 
