@@ -2,7 +2,10 @@
 
  Module for parse ethereum transactions or block and get from them all Eth transfers (normal and "internal")
  
-[![NPM version][npm-image]][npm-url] [![dependency status][dep-image]][dep-url] [![dev dependency status][dep-dev-image]][dep-dev-url] [![Coverage Status][coveralls-image]][coveralls-url]
+[![NPM version][npm-image]][npm-url]
+
+[npm-image]: https://badge.fury.io/js/etherscanner.svg
+[npm-url]: https://npmjs.org/package/etherscanner
 
 ## Installation
 
