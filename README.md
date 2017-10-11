@@ -4,8 +4,8 @@
  
 [![NPM version][npm-image]][npm-url]
 
-[npm-image]: https://badge.fury.io/js/etherscaner.svg
-[npm-url]: https://npmjs.org/package/etherscaner
+[npm-image]: https://badge.fury.io/js/etherscanner.svg
+[npm-url]: https://npmjs.org/package/etherscanner
 
 ## Installation
 
@@ -16,7 +16,7 @@ npm install etherscanner
 ## Usage
 
 ```js
-const EtherScanner = require('etherscaner');
+const EtherScanner = require('etherscanner');
 const Web3 = require('web3');
 
 let web3Provider = new Web3.providers.HttpProvider(`http://localhost:6082`);
