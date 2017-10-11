@@ -16,7 +16,7 @@ describe('ScanTransaction with preinstalled txs', () => {
 			done();
 		});
 	});
-
+	
 	it('should find 1 transactions (1 normal. tx to account). tx - 0x8ebf82e5ecbd37cca58daa97fa1bb2eaacac3deef196f4dc5850327b0d08d139', (done) => {
 		etherScanner.scanTransaction('0x8ebf82e5ecbd37cca58daa97fa1bb2eaacac3deef196f4dc5850327b0d08d139', (err, result) => {
 			let txs = [{
@@ -34,7 +34,7 @@ describe('ScanTransaction with preinstalled txs', () => {
 			done();
 		});
 	});
-
+	
 	it('Tx to contract, tx to account from contract. should find 2 transactions. (1 normal, 1 internal). tx - 0xc475f8bf9d2721b17f7c09944c2aa32ea943f452cb54ee0aefcb98ead0735274', (done) => {
 		etherScanner.scanTransaction('0xc475f8bf9d2721b17f7c09944c2aa32ea943f452cb54ee0aefcb98ead0735274', (err, result) => {
 			let txs = [{
@@ -61,10 +61,10 @@ describe('ScanTransaction with preinstalled txs', () => {
 			done();
 		});
 	});
-
+	
 	it('Created contract from contract. should find 2 transactions. (1 normal, 1 internal). tx - 0x148216e25432a8dddb3ad85a10860d07c2e895f726bc20d3ca040c5685c648d9', (done) => {
 		etherScanner.scanTransaction('0x148216e25432a8dddb3ad85a10860d07c2e895f726bc20d3ca040c5685c648d9', (err, result) => {
-
+			
 			let txs = [{
 				hash: '0x148216e25432a8dddb3ad85a10860d07c2e895f726bc20d3ca040c5685c648d9',
 				from: '0x0166685dd1fa8e6c061b13fc16fff3dea94e8ba2',
@@ -108,16 +108,36 @@ describe('ScanTransaction with preinstalled txs', () => {
 		});
 	});
 	
-	it('Selfdestruct contract. should find 1 transaction. (1 internal). tx - 0x879952951cca5c3192d153579b29b4ea1f7d56d0783ca4b67d1377cfd1dff5e2', (done) => {
+	it('CALL with ether value is still sent. should find 1 transaction. (1 internal). tx - 0x879952951cca5c3192d153579b29b4ea1f7d56d0783ca4b67d1377cfd1dff5e2', (done) => {
 		etherScanner.scanTransaction('0x879952951cca5c3192d153579b29b4ea1f7d56d0783ca4b67d1377cfd1dff5e2', (err, result) => {
-			let txs = [ { hash: '0x879952951cca5c3192d153579b29b4ea1f7d56d0783ca4b67d1377cfd1dff5e2',
+			let txs = [{
+				hash: '0x879952951cca5c3192d153579b29b4ea1f7d56d0783ca4b67d1377cfd1dff5e2',
 				from: '0xacb3b44deff7a28de951f3f99e99551c9a88464d',
 				to: '0x86b1db31bb203eef507ff4002f01d556c076c2f9',
 				value: 120000000000000000,
 				blockNumber: 1819180,
 				blockHash: '0xe72a9909cd820d5655fba9cf12ac920cfd81ece10758e44506b5be4e0b51780c',
 				isInternal: true,
-				type: 'SELFDESTRUCT' } ];
+				type: 'SELFDESTRUCT'
+			}];
+			assert.deepEqual(txs, result);
+			assert.equal(null, err);
+			done();
+		});
+	});
+	
+	it('Selfdestruct contract. should find 1 transaction. (1 internal). tx - 0xfd8c6b06617ca5c5eb528024cf383e150daa0988ee2b998cbaf3c01b951d1b8a', (done) => {
+		etherScanner.scanTransaction('0xfd8c6b06617ca5c5eb528024cf383e150daa0988ee2b998cbaf3c01b951d1b8a', (err, result) => {
+			let txs = [{
+				hash: '0xfd8c6b06617ca5c5eb528024cf383e150daa0988ee2b998cbaf3c01b951d1b8a',
+				from: '0xe380e3d54880d2ed3ae9e8970e34268262a24c40',
+				to: '0x86e6f572f57a49595defb8cbd2af84fa50d36b49',
+				value: 5000000000000000000,
+				blockNumber: 1711480,
+				blockHash: '0xa9095edfbe84dde5a4adf387b904cacc55f35b7081f17ee368e058791883266e',
+				isInternal: true,
+				type: 'CALL'
+			}];
 			assert.deepEqual(txs, result);
 			assert.equal(null, err);
 			done();

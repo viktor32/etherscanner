@@ -3,6 +3,7 @@ const logger = require('log4js').getLogger('etherscanner');
 const async = require('async');
 const fs = require('fs');
 
+require('console.table');
 class EtherScanner {
 	
 	/**
@@ -138,12 +139,12 @@ class EtherScanner {
 	_getTransactionsFromTrace(txHash, cb) {
 		return this.web3.currentProvider.sendAsync({
 			method: "debug_traceTransaction",
-			params: [txHash, {tracer: `{data: [], step: ${fs.readFileSync(__dirname + '/traceStepFunction.js').toString()}, result: function() { return this.data; }}`}],
+			params: [txHash, {tracer: `{data: [], step: ${fs.readFileSync(__dirname + '/traceStepFunction.js').toString()}, result: function() { return this.data; }}`, Timeout: "60s"}],
 			jsonrpc: "2.0",
 			id: "2"
 		}, (err, result) => {
-			if(result.message)
-				return cb(result.message);
+			if(result.error)
+				return cb(result.error.message);
 			return cb(null, result.result);
 		});
 	}

@@ -1,6 +1,6 @@
 {
   "name": "etherscaner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Receive all the ethereum transactions that have been included in the block, including 'internal' transactions",
   "author": "SBit",
   "license": "MIT",
