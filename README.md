@@ -66,3 +66,9 @@ etherScanner.scanBlock(1822433, (err, result) => {
 });
 ```
 
+# Warning!
+To the great regret at the moment I did not find a way to get the balance of the contract or account from the method step.
+This problem has already been created on the github - https://github.com/ethereum/go-ethereum/issues/3382
+To correct it, I create pull request - https://github.com/ethereum/go-ethereum/pull/15297/files
+Until it is accepted, this module will not work. But you can either make this changes on your code, or get the actual version
+from this repository - https://github.com/pixelplex/go-ethereum/  

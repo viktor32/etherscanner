@@ -143,6 +143,15 @@ describe('ScanTransaction with preinstalled txs', () => {
 			done();
 		});
 	});
+	
+	it('tx - 0x9fe73c221f5e61260ff590f92a16deed0ffd7856f507cc0e8d3b9db0a3456957', (done) => {
+		etherScanner.scanTransaction('0x9fe73c221f5e61260ff590f92a16deed0ffd7856f507cc0e8d3b9db0a3456957', (err, result) => {
+			let txs = [];
+			assert.deepEqual(txs, result);
+			assert.equal(null, err);
+			done();
+		});
+	});
 });
 
 describe('ScanBlock with preinstalled blocks', function() {

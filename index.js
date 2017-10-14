@@ -3,7 +3,6 @@ const logger = require('log4js').getLogger('etherscanner');
 const async = require('async');
 const fs = require('fs');
 
-require('console.table');
 class EtherScanner {
 	
 	/**
@@ -56,17 +55,22 @@ class EtherScanner {
 				
 				if(tx.value == 0)
 					return cb(null, tx);
-				transactions.push({
-					hash: hash,
-					from: tx.from,
-					to: tx.to,
-					value: tx.value.toNumber(),
-					blockNumber: tx.blockNumber,
-					blockHash: tx.blockHash,
-					isInternal: false,
-					type: ''
+				
+				return this.web3.eth.getTransactionReceipt(hash, (err, receipt) => {
+					if(receipt.status == '0x1') {
+						transactions.push({
+							hash: hash,
+							from: tx.from,
+							to: tx.to,
+							value: tx.value.toNumber(),
+							blockNumber: tx.blockNumber,
+							blockHash: tx.blockHash,
+							isInternal: false,
+							type: ''
+						});
+					}
+					return cb(null, tx);
 				});
-				return cb(null, tx);
 			},
 			// scan and add internal transactions
 			(tx, cb) => {
