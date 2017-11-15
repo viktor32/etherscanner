@@ -176,12 +176,12 @@ module.exports = (HttpProvider, loggerLevel) => {
 
 /**
  * @typedef {object} etherscannerObj
- * @define {String} etherscannerObj.hash
- * @define {String} etherscannerObj.from
- * @define {String} etherscannerObj.to
- * @define {Number} etherscannerObj.value
- * @define {Number} etherscannerObj.blockNumber
- * @define {String} etherscannerObj.blockHash
- * @define {Boolean} etherscannerObj.isInternal
- * @define {String} etherscannerObj.type
+ * @property {String} etherscannerObj.hash
+ * @property {String} etherscannerObj.from
+ * @property {String} etherscannerObj.to
+ * @property {Number} etherscannerObj.value
+ * @property {Number} etherscannerObj.blockNumber
+ * @property {String} etherscannerObj.blockHash
+ * @property {Boolean} etherscannerObj.isInternal
+ * @property {String} etherscannerObj.type
  */
