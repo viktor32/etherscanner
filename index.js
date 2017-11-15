@@ -173,3 +173,15 @@ module.exports = (HttpProvider, loggerLevel) => {
 		scanTransaction: scanner.scanTransaction.bind(scanner)
 	}
 };
+
+/**
+ * @typedef {object} etherscannerObj
+ * @define {String} etherscannerObj.hash
+ * @define {String} etherscannerObj.from
+ * @define {String} etherscannerObj.to
+ * @define {Number} etherscannerObj.value
+ * @define {Number} etherscannerObj.blockNumber
+ * @define {String} etherscannerObj.blockHash
+ * @define {Boolean} etherscannerObj.isInternal
+ * @define {String} etherscannerObj.type
+ */
