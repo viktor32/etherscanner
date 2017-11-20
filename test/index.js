@@ -3,7 +3,7 @@ const Web3 = require('web3');
 const EtherScanner = require('../index');
 
 // ropsten testnet
-let web3Provider = new Web3.providers.HttpProvider(`http://94.130.35.43:6082`);
+let web3Provider = new Web3.providers.HttpProvider(`http://localhost:6082`);
 
 let etherScanner = EtherScanner(web3Provider, 'trace');
 
