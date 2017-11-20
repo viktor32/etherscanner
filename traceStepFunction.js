@@ -79,7 +79,7 @@ function step(log, db) {
 			var to = log.stack.peek(1).String();
 			transfers = [];
 			from = "";
-			if(value > 0 && value <= db.getBalanceFromJs(this.data[this.data.length - 1].accountAddress).Uint64()) {
+			if(value > 0 && value <= db.getBalance(this.data[this.data.length - 1].accountAddress).Uint64()) {
 				from = '0x' + this.data[this.data.length - 1].accountAddress.map(function(byte) {
 					return ('0' + (byte & 0xFF).toString(16)).slice(-2);
 				}).join('');
@@ -115,7 +115,7 @@ function step(log, db) {
 		case "SELFDESTRUCT": {
 			// SUICIDE results in a transfer back to the calling address.
 			var frame = this.data[this.data.length - 1];
-			value = db.getBalanceFromJs(frame.accountAddress);
+			value = db.getBalance(frame.accountAddress);
 			frame.transfers.push({
 				depth: this.data.length,
 				from: frame.accountAddress,

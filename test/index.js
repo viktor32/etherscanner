@@ -3,7 +3,7 @@ const Web3 = require('web3');
 const EtherScanner = require('../index');
 
 // ropsten testnet
-let web3Provider = new Web3.providers.HttpProvider(`http://localhost:6082`);
+let web3Provider = new Web3.providers.HttpProvider(`http://94.130.35.43:6082`);
 
 let etherScanner = EtherScanner(web3Provider, 'trace');
 
@@ -155,7 +155,7 @@ describe('ScanTransaction with preinstalled txs', () => {
 });
 
 describe('ScanBlock with preinstalled blocks', function() {
-	this.timeout(15000);
+	this.timeout(30000);
 	it('should find 127 transactions (19 normal, 108 internal). block - 1822433', (done) => {
 		etherScanner.scanBlock(1822433, (err, result) => {
 			let normalTxs = result.filter(tx => !tx.isInternal);
