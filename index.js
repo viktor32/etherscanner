@@ -45,6 +45,9 @@ class EtherScanner {
 						logger.error(`Get transaction ${hash} error`, err);
 						return cb(err)
 					}
+					if(!tx) {
+						return cb('Transaction not found');
+					}
 					return cb(null, tx);
 				});
 			},
