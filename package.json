@@ -1,7 +1,7 @@
 {
 	"name": "etherscanner",
 	"namespace": "ethereum",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"description": "Receive all the ethereum transactions that have been included in the block, including 'internal' transactions",
 	"author": "PixelPlex",
 	"license": "MIT",

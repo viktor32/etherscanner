@@ -57,6 +57,8 @@ class EtherScanner {
 					return cb(null, tx);
 				
 				return this.web3.eth.getTransactionReceipt(hash, (err, receipt) => {
+					if(err)
+						return cb(err);
 					if(receipt.status == '0x1') {
 						transactions.push({
 							hash: hash,
