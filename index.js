@@ -53,15 +53,16 @@ class EtherScanner {
 			},
 			// add real tx
 			(tx, cb) => {
-				if(!tx.to && tx.value == 0)
-					return cb(null, tx);
-				
-				if(tx.value == 0)
-					return cb(null, tx);
-				
 				return this.web3.eth.getTransactionReceipt(hash, (err, receipt) => {
 					if(err)
 						return cb(err);
+					
+					if(!tx.to && tx.value == 0)
+						return cb(null, tx, receipt.status);
+					
+					if(tx.value == 0)
+						return cb(null, tx, receipt.status);
+					
 					if(receipt.status == '0x1') {
 						transactions.push({
 							hash: hash,
@@ -74,11 +75,14 @@ class EtherScanner {
 							type: ''
 						});
 					}
-					return cb(null, tx);
+					return cb(null, tx, receipt.status);
 				});
 			},
 			// scan and add internal transactions
-			(tx, cb) => {
+			(tx, status, cb) => {
+				if(status != '0x1') {
+					return cb(null, transactions);
+				}
 				this._checkOffChainTx(tx, (err, txs, createContractAddress) => {
 					if(err)
 						return cb(err);
