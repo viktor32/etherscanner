@@ -156,6 +156,8 @@ class EtherScanner {
 			jsonrpc: "2.0",
 			id: "2"
 		}, (err, result) => {
+			if(err)
+				return cb(err);
 			if(result.error)
 				return cb(result.error.message);
 			return cb(null, result.result);
