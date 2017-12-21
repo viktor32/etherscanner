@@ -33,7 +33,7 @@ function step(log, db) {
 			if(!topFrame.accountAddress) {
 				topFrame.accountAddress = log.stack.peek(0).Bytes();
 			}
-			
+
 			returnFrame.transfers.forEach(function(tx, i) {
 				if(!tx.to) returnFrame.transfers[i].to = createdAddress;
 				else if(!tx.from) returnFrame.transfers[i].from = createdAddress;
@@ -79,7 +79,7 @@ function step(log, db) {
 			var to = log.stack.peek(1).String();
 			transfers = [];
 			from = "";
-			if(value > 0 && value <= db.getBalance(this.data[this.data.length - 1].accountAddress).Uint64()) {
+			if(typeof this.data[this.data.length - 1].accountAddress !== 'string' && value > 0 && value <= db.getBalance(this.data[this.data.length - 1].accountAddress).Uint64()) {
 				from = '0x' + this.data[this.data.length - 1].accountAddress.map(function(byte) {
 					return ('0' + (byte & 0xFF).toString(16)).slice(-2);
 				}).join('');

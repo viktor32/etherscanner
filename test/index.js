@@ -152,6 +152,13 @@ describe('ScanTransaction with preinstalled txs', () => {
 			done();
 		});
 	});
+	
+	it('tx - 0x9bf2190ad13ca90e96162c96437d53e8647debf376916577e350c90d8824ef4a', (done) => {
+		etherScanner.scanTransaction('0x9bf2190ad13ca90e96162c96437d53e8647debf376916577e350c90d8824ef4a', (err, result) => {
+			// TODO add test
+			done();
+		});
+	});
 });
 
 describe('ScanBlock with preinstalled blocks', function() {
