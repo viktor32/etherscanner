@@ -1,9 +1,9 @@
 {
 	"name": "etherscanner",
 	"namespace": "ethereum",
-	"version": "0.1.13",
+	"version": "0.1.14",
 	"description": "Receive all the ethereum transactions that have been included in the block, including 'internal' transactions",
-	"author": "PixelPlex",
+	"author": "tet32",
 	"license": "MIT",
 	"scripts": {
 		"test": "mocha"
@@ -13,11 +13,11 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:pixelplex/etherscanner.git"
+		"url": "git@github.com:tet32/etherscanner.git"
 	},
-	"homepage": "https://github.com/pixelplex/etherscanner",
+	"homepage": "https://github.com/tet32/etherscanner",
 	"bugs": {
-		"url": "https://github.com/pixelplex/etherscanner/issues"
+		"url": "https://github.com/tet32/etherscanner/issues"
 	},
 	"keywords": [
 		"ethereum",
