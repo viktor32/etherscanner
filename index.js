@@ -48,6 +48,9 @@ class EtherScanner {
 					if(!tx) {
 						return cb('Transaction not found');
 					}
+					if(!tx.blockNumber) {
+						return cb('Unconfirmed transaction');
+					}
 					return cb(null, tx);
 				});
 			},
