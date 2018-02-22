@@ -115,7 +115,8 @@ function step(log, db) {
 		case "SELFDESTRUCT": {
 			// SUICIDE results in a transfer back to the calling address.
 			var frame = this.data[this.data.length - 1];
-			value = db.getBalance(frame.accountAddress);
+			
+			value = frame.accountAddress ? db.getBalance(frame.accountAddress) : 0;
 			frame.transfers.push({
 				depth: this.data.length,
 				from: frame.accountAddress,
