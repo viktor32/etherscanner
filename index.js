@@ -60,7 +60,7 @@ class EtherScanner {
 	}
 
 	_getTransactionCalls(tx, cb) {
-		this._getTransactionsFromTrace(tx.hash, (err, result) => {
+		this._getTransactionsFromTrace(tx.hash, tx.blockNumber, (err, result) => {
 			if(err) {
 				return cb(err);
 			}
@@ -91,19 +91,28 @@ class EtherScanner {
 		return txs;
 	}
 
-	_getTransactionsFromTrace(txHash, cb) {
-		return this.web3.currentProvider.sendAsync({
-			method: "debug_traceTransaction",
-			params: [txHash, {tracer: "callTracer"}],
-			jsonrpc: "2.0",
-			id: "2"
-		}, (err, result) => {
-			if(err)
-				return cb(err);
-			if(result.error)
-				return cb(result.error.message);
-			return cb(null, result.result);
-		});
+	_getTransactionsFromTrace(txHash, txBlockNumber, cb) {
+		async.waterfall([
+			(cb) => {
+				this.web3.eth.getBlockNumber((err, blockNumber) => {
+					return cb(err, blockNumber);
+				});
+			},
+			(blockNumber, cb) => {
+				return this.web3.currentProvider.sendAsync({
+					method: "debug_traceTransaction",
+					params: [txHash, {tracer: "callTracer", reexec: blockNumber - txBlockNumber + 20}],
+					jsonrpc: "2.0",
+					id: "2"
+				}, (err, result) => {
+					if(err)
+						return cb(err);
+					if(result.error)
+						return cb(result.error.message);
+					return cb(null, result.result);
+				});
+			},
+		], cb);
 	}
 
 	_getAddress(value) {

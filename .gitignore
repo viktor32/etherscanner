@@ -60,3 +60,4 @@ typings/
 .env
 
 .node-xmlhttprequest-sync-*
+package-lock.json
