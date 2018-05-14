@@ -39,7 +39,7 @@ class EtherScanner {
 	scanTransaction(hash, cb) {
 		async.waterfall([
 			cb => {
-				this.web3.eth.getTransaction(hash, (err, tx) => {
+				this.web3.eth.getTransactionReceipt(hash, (err, tx) => {
 					if(err) {
 						logger.error(`Get transaction ${hash} error`, err);
 						return cb(err)
@@ -54,13 +54,16 @@ class EtherScanner {
 				});
 			},
 			(tx, cb) => {
+				if (tx.status === '0x0') {
+					return cb(null, []);
+				}
 				return this._getTransactionCalls(tx, (err, result) => cb(err, result));
 			}
 		], (err, transactions) => cb(err, transactions));
 	}
 
 	_getTransactionCalls(tx, cb) {
-		this._getTransactionsFromTrace(tx.hash, tx.blockNumber, (err, result) => {
+		this._getTransactionsFromTrace(tx.transactionHash, tx.blockNumber, (err, result) => {
 			if(err) {
 				return cb(err);
 			}
@@ -77,7 +80,7 @@ class EtherScanner {
 				to: this._getAddress(callObject.to),
 				from: this._getAddress(callObject.from),
 				value: parseInt(callObject.value, 16),
-				hash: tx.hash,
+				hash: tx.transactionHash,
 				type: callObject.type,
 				isSuicide: callObject.type == 'SELFDESTRUCT'
 			});
