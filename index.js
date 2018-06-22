@@ -13,6 +13,8 @@ class EtherScanner {
 	constructor(HttpProvider, loggerLevel = 'OFF') {
 		logger.level = loggerLevel;
 
+		this.requestId = 1;
+
 		this.web3 = new Web3(HttpProvider);
 		if(!this.web3.isConnected()) {
 			logger.error("Ethereum node is not connected");
@@ -26,7 +28,7 @@ class EtherScanner {
 			if(err) return cb(err);
 			if(!block) return cb(number, []);
 			let result = [];
-			async.eachSeries(block.transactions, (txHash, cb) => {
+			async.each(block.transactions, (txHash, cb) => {
 				this.scanTransaction(txHash, (err, transactions) => {
 					if(err) return cb(err);
 					result = result.concat(transactions);
@@ -102,11 +104,12 @@ class EtherScanner {
 				});
 			},
 			(blockNumber, cb) => {
+				this.requestId++;
 				return this.web3.currentProvider.sendAsync({
 					method: "debug_traceTransaction",
 					params: [txHash, {tracer: "callTracer", reexec: blockNumber - txBlockNumber + 20}],
 					jsonrpc: "2.0",
-					id: "2"
+					id: this.requestId.toString()
 				}, (err, result) => {
 					if(err)
 						return cb(err);
