@@ -1,7 +1,6 @@
-const Web3 = require('web3');
-const logger = require('log4js').getLogger('etherscanner');
 const async = require('async');
 const fs = require('fs');
+const BigNumber = require('bignumber.js');
 
 class Parity {
 
@@ -45,7 +44,7 @@ class Parity {
 							blockHash: receipt.blockHash,
 							to: this._getAddress(callObject.action.to),
 							from: this._getAddress(callObject.action.from),
-							value: parseInt(callObject.action.value, 16),
+							value: new BigNumber(callObject.action.value).toString(),
 							hash: hash,
 							type: callObject.type,
 							isSuicide: callObject.type == 'SELFDESTRUCT',

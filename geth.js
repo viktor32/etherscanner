@@ -1,6 +1,7 @@
 const logger = require('log4js').getLogger('etherscanner');
 const async = require('async');
 const fs = require('fs');
+const BigNumber = require('bignumber.js');
 
 class Geth {
 
@@ -67,7 +68,7 @@ class Geth {
 				blockHash: tx.blockHash,
 				to: this._getAddress(callObject.to),
 				from: this._getAddress(callObject.from),
-				value: parseInt(callObject.value, 16),
+				value: new BigNumber(callObject.value).toString(),
 				hash: tx.transactionHash,
 				type: callObject.type,
 				isSuicide: callObject.type == 'SELFDESTRUCT',
