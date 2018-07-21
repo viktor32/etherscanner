@@ -3,8 +3,7 @@ const Web3 = require('web3');
 const EtherScanner = require('../index');
 
 // ropsten testnet
-// let web3Provider = new Web3.providers.HttpProvider(`https://parity-ropsten.pixelplex.io`);
-let web3Provider = new Web3.providers.HttpProvider(`http://94.130.13.168:6083`);
+let web3Provider = new Web3.providers.HttpProvider(`https://parity-ropsten.pixelplex.io`);
 
 let etherScanner = EtherScanner(web3Provider, 'trace');
 
@@ -12,15 +11,14 @@ describe('ScanTransaction with preinstalled txs', function() {
 
 	this.timeout(30000);
 	it('should find 0 transactions (tx to contract with error). tx - 0x4ea1bb56abfd2b309794b6f537d202580fe24d53382c6ef775258cf6084fca30', (done) => {
-		etherScanner.scanTransaction('0x55eea92566a68ddebd1aa0511230b517638964abaad5e86d531608aa178d76ff', (err, result) => {
-			console.log(result);
+		etherScanner.scanTransaction('0x4ea1bb56abfd2b309794b6f537d202580fe24d53382c6ef775258cf6084fca30', (err, result) => {
 			assert.equal(null, err);
 			let txs = [];
 			assert.deepEqual(txs, result);
 			done();
 		});
 	});
-return;
+
 	it('should find 2 transactions (tx to contract and from contract). tx - 0x14aeb207242b261a622ded82a61a05ed10fa760462a7a8ecfda2a63d6793dfad', (done) => {
 		etherScanner.scanTransaction('0x14aeb207242b261a622ded82a61a05ed10fa760462a7a8ecfda2a63d6793dfad', (err, result) => {
 			assert.equal(null, err);
