@@ -36,9 +36,9 @@ class Geth {
 					if(!tx) {
 						return cb('Transaction not found');
 					}
-					if(!tx.blockNumber) {
-						return cb('Unconfirmed transaction');
-					}
+					// if(!tx.blockNumber) {
+					// 	return cb('Unconfirmed transaction');
+					// }
 					return cb(null, tx);
 				});
 			},
@@ -94,7 +94,7 @@ class Geth {
 				this.requestId++;
 				return this.web3.currentProvider.sendAsync({
 					method: "debug_traceTransaction",
-					params: [txHash, { tracer: "callTracer", reexec: blockNumber - txBlockNumber + 20 }],
+					params: [txHash, { tracer: "callTracer", reexec: txBlockNumber ? (blockNumber - txBlockNumber + 20) : 200 }],
 					jsonrpc: "2.0",
 					id: this.requestId.toString(),
 				}, (err, result) => {
