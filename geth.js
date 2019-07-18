@@ -94,7 +94,7 @@ class Geth {
 				this.requestId++;
 				return this.web3.currentProvider.sendAsync({
 					method: "debug_traceTransaction",
-					params: [txHash, { tracer: "callTracer", reexec: txBlockNumber ? (blockNumber - txBlockNumber + 20) : 200 }],
+					params: [txHash, { tracer: "callTracer", reexec: txBlockNumber ? (blockNumber - txBlockNumber + 20) : 200, timeout: "60s"}],
 					jsonrpc: "2.0",
 					id: this.requestId.toString(),
 				}, (err, result) => {
